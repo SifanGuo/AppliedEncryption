@@ -1,5 +1,5 @@
 import Encryption1
-
+import time
 
 def baby_step_giant_step(g, p, h):
     """ this function hopefully will solve the Discrete Log Problem"""
@@ -37,7 +37,8 @@ def baby_step_giant_step(g, p, h):
 def hack_ElGamal(p, g, A, c1, c2):
     """Hopefully, this script will hack El Gamal"""
     a = baby_step_giant_step(g, p, A)
-    print("Here is the secret key", a)
+    print("\nHere is the secret key (also known as Alice's private key)", a)
+    print("In case we want to add this key to the rainbow table.")
     c1_inverse = Encryption1.InverseCalculator(c1, p)
     decimal_message = (Encryption1.fastPower(c1_inverse, a, p) * c2) % p
     print("The decimal form of the message is ", decimal_message)
@@ -45,10 +46,30 @@ def hack_ElGamal(p, g, A, c1, c2):
     return string_message
 
 
-test_p = 2147483647
-test_g = 7814
-test_A = 861678052
-test_c1 = 444551209
-test_c2 = 1427893323
+# Now, the show time
+# Read lines from input.txt
+input_file_name = "01-Hack_El_Gamal-input.txt"
+test_input_file = open(input_file_name, "r")
+
+test_p = int(test_input_file.readline())
+test_g = int(test_input_file.readline())
+test_A = int(test_input_file.readline())
+test_c1 = int(test_input_file.readline())
+test_c2 = int(test_input_file.readline())
+
+# close the file
+test_input_file.close()
+
+print("We're trying to hack your message!")
+start_time = time.process_time()   # get the start cpu time in seconds
+print("Current CPU time is {} second(s)".format(start_time))
+
+# call the function
 lovely_message = hack_ElGamal(test_p, test_g, test_A, test_c1, test_c2)
-print("Hahahaha, you get hacked!", lovely_message)
+
+
+end_time = time.process_time()    # get the end cpu time in seconds
+print("\nYour message gets hacked. Current CPU time is {} second(s)".format(end_time))
+
+print("The message is: ", lovely_message)
+print("It's hacked within {} second(s)!".format(end_time - start_time))
