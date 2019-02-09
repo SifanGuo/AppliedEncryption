@@ -8,11 +8,15 @@ def baby_step_giant_step(g, p, h):
     # print(n)
 
     # 2nd Step: Make a list of Baby Steps
-    baby_list = []
+    # baby_list = []
+    # instead of using a list, why not use a dict to improve efficiency
+    baby_dict = {}
     for i in range(n):
         current_baby_step = Encryption1.fastPower(g, i, p)
         # print(current_baby_step)   # check every step
-        baby_list.append(current_baby_step)
+        # baby_list.append(current_baby_step)
+        # using dict format
+        baby_dict[current_baby_step] = i
 
     # print("The baby list is:\n", baby_list)   # check the list
 
@@ -22,8 +26,10 @@ def baby_step_giant_step(g, p, h):
         g_inverse = Encryption1.InverseCalculator(g, p)
         current_giant_step = (h * Encryption1.fastPower(g_inverse, j*n, p)) % p
 
-        if current_giant_step in baby_list:
-            baby_index = baby_list.index(current_giant_step)
+        # if current_giant_step in baby_list:
+        if current_giant_step in baby_dict:
+            # baby_index = baby_list.index(current_giant_step)
+            baby_index = baby_dict[current_giant_step]
             # print("The baby index is: ", baby_index)
             giant_index = j
             # print("The giant index is: ", giant_index)
