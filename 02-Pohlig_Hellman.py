@@ -26,7 +26,7 @@ def get_prime_power(p):
     return num_counts
 
 
-def chinese_remainder(g, p, q, h):
+def chinese_remainder(g, p, q, x):
     """Hopefully, I can find the answer."""
     # 1st step: g mod p, g mod q
     p_remainder = g % p
@@ -35,10 +35,10 @@ def chinese_remainder(g, p, q, h):
     # print("{} % {} = {}".format(g, q, q_remainder))
 
     # 2st step: reduce the exponent
-    p_reduce_exponent = h % (p - 1)
-    # print("{} % {} = {}".format(h, p - 1, p_reduce_exponent))
-    q_reduce_exponent = h % (q - 1)
-    # print("{} % {} = {}".format(h, q - 1, q_reduce_exponent))
+    p_reduce_exponent = x % (p - 1)
+    # print("{} % {} = {}".format(x, p - 1, p_reduce_exponent))
+    q_reduce_exponent = x % (q - 1)
+    # print("{} % {} = {}".format(x, q - 1, q_reduce_exponent))
 
     # 3rd step: we must have small numbers right now, and let's calculate
     ans_p = Encryption1.fastPower(p_remainder, p_reduce_exponent, p)
@@ -59,7 +59,20 @@ def chinese_remainder(g, p, q, h):
     return response
 
 
-get_prime_power(1291799)
+# Read lines from input file
+input_file_name = "POHLIGinput.txt"
+test_input_file = open(input_file_name, "r")
+
+test_p = int(test_input_file.readline())
+test_g = int(test_input_file.readline())
+test_h = int(test_input_file.readline())
+
+# close the file
+test_input_file.close()
+
+# the keys are p, the values are e
+pe_dict = get_prime_power(1291799)
+
 
 """
 in each of the following cases.
