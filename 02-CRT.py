@@ -12,9 +12,9 @@ def chinese_remainder(g, p, q, x):
 
     # 2st step: reduce the exponent
     p_reduce_exponent = x % (p - 1)
-    # print("{} % {} = {}".format(h, p - 1, p_reduce_exponent))
+    # print("{} % {} = {}".format(x, p - 1, p_reduce_exponent))
     q_reduce_exponent = x % (q - 1)
-    # print("{} % {} = {}".format(h, q - 1, q_reduce_exponent))
+    # print("{} % {} = {}".format(x, q - 1, q_reduce_exponent))
 
     # 3rd step: we must have small numbers right now, and let's calculate
     ans_p = Encryption1.fastPower(p_remainder, p_reduce_exponent, p)
