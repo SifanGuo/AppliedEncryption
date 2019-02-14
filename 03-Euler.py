@@ -15,6 +15,12 @@ def get_factors(p):
     current_quotient = 3
     while  current_quotient <= p ** 0.5:
         while p % current_quotient == 0:
+            current_remainder = p // current_quotient
+            if current_remainder not in num_counts:
+                num_counts[current_remainder] = 1
+            else:
+                num_counts[current_remainder] += 1
+
             if current_quotient not in num_counts:
                 num_counts[current_quotient] = 1
             else:
