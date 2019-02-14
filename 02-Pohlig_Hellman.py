@@ -26,36 +26,36 @@ def get_prime_power(p):
     return num_counts
 
 
-def chinese_remainder(g, p, q, x):
-    """Hopefully, I can find the answer."""
-    # 1st step: g mod p, g mod q
-    p_remainder = g % p
-    # print("{} % {} = {}".format(g, p, p_remainder))
-    q_remainder = g % q
-    # print("{} % {} = {}".format(g, q, q_remainder))
+def advanced_chinese_remainder(g, m_x_dict):
+    """This is Sifan's advanced CRT implementation, cuz
+    the simple version only solves 2 congruences.
 
-    # 2st step: reduce the exponent
-    p_reduce_exponent = x % (p - 1)
-    # print("{} % {} = {}".format(x, p - 1, p_reduce_exponent))
-    q_reduce_exponent = x % (q - 1)
-    # print("{} % {} = {}".format(x, q - 1, q_reduce_exponent))
+    input is g and a dict whose keys are modulus and values are remainders """
+    # 1st step: calculate the total product of modulus
+    total_modulus_product = 1    # initial value
+    # loop the keys of the dictionary
+    for modulus in m_x_dict:
+        total_modulus_product *= modulus
 
-    # 3rd step: we must have small numbers right now, and let's calculate
-    ans_p = Encryption1.fastPower(p_remainder, p_reduce_exponent, p)
-    # print("{} ^ {} mod ({}) = {}".format(p_remainder, p_reduce_exponent, p, ans_p))
-    # ans_q = q_remainder ** q_reduce_exponent % q
-    ans_q = Encryption1.fastPower(q_remainder, q_reduce_exponent, q)
-    # print("{} ^ {} mod ({}) = {}".format(q_remainder, q_reduce_exponent, q, ans_q))
+    # use a list to store the possible x
+    x_list = []
+    # loop the keys and values of the dictionary
+    for modulus, value in m_x_dict.items():
+        current_modulus_product = total_modulus_product / modulus
+        # if current one meets the criteria
+        if current_modulus_product % modulus == value:
+            x_list.append(current_modulus_product)
+            break
+        else:
+            inverse_current_modulus_product = 
+            x_list.append(current_modulus_product * inverse_current_modulus_product * value)
+    # finally, we calculate the sum of the possible X
+    response = 0
+    for possible_x in x_list:
+        response += possible_x
 
-    # 4th step: the inverse of them
-    p_inverse_mod_q = Encryption1.InverseCalculator(p, q)
-    # print("P's inverse mod Q is ", p_inverse_mod_q)
-    q_inverse_mod_p = Encryption1.InverseCalculator(q, p)
-    # print("Q's inverse mod P is ", q_inverse_mod_p)
-
-    # 5th step: times inverse and addition
-    response = (q * q_inverse_mod_p * ans_p + p * p_inverse_mod_q * ans_q ) % (p * q)
-
+    # Almost forget to mod this
+    response %= total_modulus_product
     return response
 
 
@@ -71,7 +71,8 @@ test_h = int(test_input_file.readline())
 test_input_file.close()
 
 # the keys are p, the values are e
-pe_dict = get_prime_power(1291799)
+pe_dict = get_prime_power(11251)
+print(pe_dict)
 
 
 """
