@@ -1,4 +1,4 @@
-import Sifan_BsGs_Inverse
+import Sifan_tools
 
 
 def get_prime_power(p):
