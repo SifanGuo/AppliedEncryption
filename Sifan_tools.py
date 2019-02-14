@@ -46,20 +46,52 @@ def gcd(a, b):
 
         # go to next remainder
         current_index += 1
-    print("The gcd is ", remainder_list[-2])
-    return remainder_list, quotient_list
+    # print("The gcd is ", remainder_list[-2])
+    # return remainder_list, quotient_list
+    return remainder_list[-2]
 
 
 # define the main function for this assignment
 # input is a,b (a is g, b is p)
 # output is the inverse or None when gcd is not 1
 def extended_euclidean(a, b):
-    # initialize the first two values for u_list and v_list
-    u_list = [0, 1]
-    v_list = [1, 0]
 
     # call the gcd function to get the remainder_list and quotient_list
-    remainder_list, quotient_list = gcd(a, b)
+    # initialize the list
+    remainder_list = []
+    quotient_list = []
+    # make sure the remainders are in decreasing order
+    if a > b:
+        remainder_list.append(a)
+        remainder_list.append(b)
+    else:
+        remainder_list.append(b)
+        remainder_list.append(a)
+
+    # calculate the current remainder
+    current_remainder = remainder_list[0] % remainder_list[1]
+    current_quotient = remainder_list[0] // remainder_list[1]
+
+    # append the current remainder and the quotient
+    remainder_list.append(current_remainder)
+    quotient_list.append(current_quotient)
+
+    # initialize the variable for this while loop
+    current_index = 1
+    while current_remainder != 0:
+        # calculate the current remainder and the quotient
+        current_remainder = remainder_list[current_index] % remainder_list[current_index + 1]
+        current_quotient = remainder_list[current_index] // remainder_list[current_index + 1]
+        # print(current_quotient)     # used in debugging
+
+        # append the current remainder and the quotient
+        remainder_list.append(current_remainder)
+        quotient_list.append(current_quotient)
+
+        # go to next remainder
+        current_index += 1
+    # print("The gcd is ", remainder_list[-2])
+
     gcd_of_ab = remainder_list[-2]
 
     if gcd_of_ab != 1:
@@ -68,6 +100,9 @@ def extended_euclidean(a, b):
         return
 
 # else, the following will be executed
+    # initialize the first two values for u_list and v_list
+    u_list = [0, 1]
+    v_list = [1, 0]
 
     # for every quotient, we can restore the u and v and remainder
     for index, quotient in enumerate(quotient_list):

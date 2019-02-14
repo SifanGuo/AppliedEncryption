@@ -3,7 +3,8 @@ def get_factors(p):
     output is a dict showing the primes and their powers"""
     # using a dict to store the powers of every prime number
     num_counts = {}
-    num_counts[2] = 0
+    if p % 2 == 0:
+        num_counts[2] = 0
     while p % 2 == 0:
         num_counts[2] += 1
         p = p / 2
@@ -22,5 +23,6 @@ def get_factors(p):
     return num_counts
 
 
+print("Input your test number:", end="")
 test_num = int(input())
 print(get_factors(test_num))
