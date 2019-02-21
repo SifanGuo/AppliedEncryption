@@ -49,7 +49,8 @@ def euler(p, q):
 
 # test_pq = int(input())
 test_pq = 2754056308062191369829499027839080282032904501335240494863011176478816681562817959929612699397380172288278842183715230695899883935507881086649976607452679
-factors_dict = get_factors(2687702801274018617)
+# forget it, the large PQ is not designed to be breaked
+factors_dict = get_factors(850)
 print(factors_dict)
 # for factor, count in factors_dict.items():
 #     print(factor)
