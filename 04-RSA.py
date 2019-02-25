@@ -133,6 +133,7 @@ def decryption(c, e, p, q):
     if type(c) is int:
         # calculate the inverse of e mod (p-1)*(q-1)
         d = Sifan_tools.extended_euclidean(e, (p-1)*(q-1))
+        # print("This is d:\n", d)    #  test d for inverse check
         decimal_m = Encryption1.fastPower(c, d, p * q)
         m = Encryption1.int2msg(decimal_m)
         return m
@@ -149,8 +150,8 @@ def decryption(c, e, p, q):
         # print(m)
         return m
 
-
-test_message = "\n\tGood Job!\t I'm using this long sentence as my test case.\n\tThis is the second line of the message~\n so far, it fails to support Chinese characters.\n\tThis is the end of the test message, farewell~"
+short_test_message = "I'm short message~"
+long_test_message = "\n\tGood Job!\t I'm using this long sentence as my test case.\n\tThis is the second line of the message~\n so far, it fails to support Chinese characters.\n\tThis is the end of the test message, farewell~"
 # print(type(test_message))
 # print(len(test_message))
 # read input from file RSAinput.txt
@@ -165,7 +166,7 @@ RSAinput.close()   # close the file in use
 # test_q = 2568337697
 # test_e = 2709929475300581585
 # test_e = key_generation(test_p, test_q)
-test_c = encryption(test_message, test_e, test_p, test_q)
+test_c = encryption(long_test_message, test_e, test_p, test_q)
 print("This is the c or the list of c AKA encrypted message\n", test_c)
 
 result = decryption(test_c, test_e, test_p, test_q)
