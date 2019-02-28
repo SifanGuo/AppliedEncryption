@@ -1,3 +1,6 @@
+import time
+from hashlib import sha256
+
 # This code is taken directly from the textbook. exercise 1.25 at the back of chapter 1
 def fastPower(g,x,p):
     a = g
@@ -163,3 +166,24 @@ def baby_step_giant_step(g, p, h):
         giant_list.append(current_giant_step)
 
     print("If the script doesn't return, you'll see the giant list:\n", giant_list)
+
+
+# define the function to return random number
+# two inputs, 1st is the min, 2nd is the max
+# the output is an integer number between min and max, both are included
+# e.g. input 1,4; output random numbers from 1,2,3,4
+def sifan_random(random_min=1, random_max=10):
+    # calculate the range
+    random_range = random_max - random_min + 1
+    # convert the into string
+    state = str(time.perf_counter())
+    # print("\nThe current state is ", state)
+    # using the current state as the seed
+    sha256_value = sha256(state.encode("utf-8")).hexdigest()
+    # transform the hex value into decimal
+    sha256_value_decimal = int(sha256_value, 16)
+    # scale the number to meet users' requirement
+    result = sha256_value_decimal % random_range + random_min
+
+    # print("The current random number is ", result)
+    return result
