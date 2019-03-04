@@ -14,11 +14,11 @@ def sifan_random(random_min=1, random_max=10):
     state = str(time.perf_counter())
     # print("\nThe current state is ", state)
     # using the current state as the seed
-    sha256_value = sha512(state.encode("utf-8")).hexdigest()
+    sha512_value = sha512(state.encode("utf-8")).hexdigest()
     # transform the hex value into decimal
-    sha256_value_decimal = int(sha256_value, 16)
+    sha512_value_decimal = int(sha512_value, 16)
     # scale the number to meet users' requirement
-    result = sha256_value_decimal % random_range + random_min
+    result = sha512_value_decimal % random_range + random_min
 
     # print("The current random number is ", result)
     return result
