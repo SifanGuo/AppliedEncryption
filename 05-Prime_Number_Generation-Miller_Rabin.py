@@ -1,7 +1,6 @@
 import time
 from hashlib import sha512
 import Encryption1
-import Sifan_tools
 
 
 # define the function to return random number
@@ -38,9 +37,9 @@ def miller_factor(num):
 
 def miller_rabin_witness(a, k, q, p):
     """Is a a Miller Rabin witness for p, if so, p is a composite (return True). Otherwise, we return False"""
-    if Sifan_tools.gcd(a, p) != 1:
+    if Encryption1.gcd(a, p) != 1:
         # test the gcd and I try to rule out the small prime numbers
-        print("{} is Miller Rabin witness because gcd({},{}) = {}".format(a, a, p, Sifan_tools.gcd(a, p)))
+        print("{} is Miller Rabin witness because gcd({},{}) = {}".format(a, a, p, Encryption1.gcd(a, p)))
         return True
 
     if Encryption1.fastPower(a, q, p) in [p - 1, 1]:
