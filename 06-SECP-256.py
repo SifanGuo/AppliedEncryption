@@ -21,12 +21,11 @@ checkans(test_x, test_y, test_p)
 
 
 def ecPPaddition(p, x, y):
-    slope = ((3 * (x  ** 2) + 3) * Encryption1.InverseCalculator(2 * y, p) ) % p
+    slope = ((3 * (x  ** 2)) * Encryption1.InverseCalculator(2 * y, p) ) % p
     # intercept = y - slope * x
     x3 = (Encryption1.fastPower(slope, 2, p) - 2 * x ) % p
     y3 = (slope * (x - x3) - y) % p
-    if y3 == 0:
-        y3 = p
+
 
     return x3, y3
 
@@ -41,8 +40,7 @@ def ecPQaddition(p, x1, y1, x2, y2):
     # intercept = y1 - slope * x1
     x3 = (Encryption1.fastPower(slope, 2, p) - x1 - x2) % p
     y3 = (slope * (x1 - x3) - y1 ) % p
-    if y3 == 0:
-        y3 = p
+
 
     return x3, y3
 
@@ -68,5 +66,5 @@ def fastAdding(p, a, Gx, Gy):
 
 
 agx, agy = fastAdding(test_p, test_a, test_x, test_y)
-print(fastAdding(13, 2, 9, 7))
-# print(agx, agy)
+# print(fastAdding(13, 2, 9, 7))
+print(agx, agy)
