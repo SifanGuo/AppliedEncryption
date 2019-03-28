@@ -1,5 +1,4 @@
 import Encryption1
-import Sifan_tools
 
 """This script will solve the addition of different Points or some number multiply Points inside Elliptic Curve Y^2 = X^3 + AX + B"""
 
