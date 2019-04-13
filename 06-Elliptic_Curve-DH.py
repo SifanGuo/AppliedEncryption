@@ -4,18 +4,28 @@ import Encryption1
 
 """So, I decide to read A & B & p before the definition of functions."""
 
+file_input = open("ECDHinput.txt", "r")
 
-A = 324
-B = 1287
-p = 3851
+A = int(file_input.readline())
+B = int(file_input.readline())
+p = int(file_input.readline())
 
-Gx = 920
-Gy = 303
+G = file_input.readline().rstrip().split(",")
+# print(G)
+xG = int(G[0])
+yG = int(G[1])
 
-a = 1194
-# b = 1759
-b = 1760
+# print(xG,yG)
 
+Qa = file_input.readline().rstrip().split(",")
+# print(G)
+xQa = int(Qa[0])
+yQa = int(Qa[1])
+
+b = int(file_input.readline())
+ciphertext = file_input.readline()
+# print(len(ciphertext))
+# print(b)
 def ecPPaddition(x, y):
     # The cubic function here is y=X^3 + A*X^2 + B
     slope = ((3 * (x  ** 2) + A) * Encryption1.InverseCalculator(2 * y, p) ) % p
@@ -45,13 +55,13 @@ def ecPQaddition(x1, y1, x2, y2):
     return x3, y3
 
 
-def fastAdding(a, Gx, Gy):
+def fastAdding(a, xG, yG):
     binary_a = Encryption1.int2bin(a)
     # print(type(binary_a))
     # print(len(binary_a))
 
-    x_now = Gx
-    y_now = Gy
+    x_now = xG
+    y_now = yG
 
     x_ans = "infinity"
     y_ans = "infinity"
@@ -64,13 +74,29 @@ def fastAdding(a, Gx, Gy):
     return x_ans, y_ans
 
 
-xQa, yQa = fastAdding(a, Gx, Gy)
-print(xQa, yQa)
-xQb, yQb = fastAdding(b, Gx, Gy)
-print(xQb, yQb)
+def translator(cipher, keypad):
+    """This function will translate for you using XOR"""
+    if len(cipher) > len(keypad):
+        print("ERROR, keys are short than the ciphertext")
+        return
+
+    bin_message = ""
+    for index, ch in enumerate(cipher):
+        if keypad[index] == ch:
+            bin_message += "0"
+        else:
+            bin_message += "1"
+    # print(cipher)
+    # print(keypad)
+    # print(bin_message)
+
+    return Encryption1.bin2msg(bin_message)
+
 
 xQab, yQab = fastAdding(b, xQa, yQa)
-print(xQab, yQab)
-
-xQba, yQba = fastAdding(a, xQb, yQb)
-print(xQba, yQba)
+# print(xQab, yQab)
+shared_key = Encryption1.int2bin(xQab)
+message = translator(ciphertext, shared_key)
+print(message)
+# print(str(shared_key^ciphertext))
+# print(Encryption1.bin2msg()
