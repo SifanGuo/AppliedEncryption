@@ -5,24 +5,33 @@ import Encryption1
 """So, I decide to read A & B & p before the definition of functions."""
 
 
+file_input = open("ECElGamalinput.txt", "r")
 
-A = 324
-B = 1287
-p = 3851
-
-# file_input = open(".txt", "r")
-#
-# A = int(file_input.readline())
-# B = int(file_input.readline())
-# p = int(file_input.readline())
+A = int(file_input.readline())
+B = int(file_input.readline())
+p = int(file_input.readline())
 
 
-xG = 920
-yG = 303
+G = file_input.readline().rstrip().split(",")
+# print(G)
+xG = int(G[0])
+yG = int(G[1])
 
-a = 1194
-# b = 1759
-b = 1760
+# print(xG,yG)
+
+C1 = file_input.readline().rstrip().split(",")
+
+xC1 = int(C1[0])
+yC1 = int(C1[1])
+
+
+C2 = file_input.readline().rstrip().split(",")
+
+xC2 = int(C2[0])
+yC2 = int(C2[1])
+
+a = int(file_input.readline())
+
 
 def ecPPaddition(x, y):
     # The cubic function here is y=X^3 + A*X^2 + B
@@ -73,16 +82,30 @@ def fastAdding(a, xG, yG):
 
 
 def ElGamal_Alice_generate():
+    """This function use the a input in the beginning"""
     xQa, yQa = fastAdding(a, xG, yG)
     print(xQa, yQa)
     return xQa, yQa
 
-def ElGamal_Bob(xQa, yQa):
+
+def ElGamal_Bob(xQa, yQa, xM, yM):
     """This function will calculate the C1 and C2"""
     xC1, yC1 = fastAdding(k, xG, yG)
     xkQa, ykQa = fastAdding(k, xQa, yQa)
     xC2, yC2 = ecPQaddition(xkQa, ykQa, xM, yM)
-    return
+    return [(xC1, yC1), (xC2, yC2)]
 
-xQb, yQb = fastAdding(b, xG, yG)
-print(xQb, yQb)
+
+def ElGamal_Alice_decrypt(xC1, yC1, xC2, yC2):
+    """This function will decrypt the message"""
+    x_aC1, y_aC1 = fastAdding(a, xC1, yC1)
+
+    """Using (x_aC1, -y_aC1) to do the substraction"""
+    xM, yM = ecPQaddition(xC2, yC2, x_aC1, -y_aC1)
+    message = Encryption1.int2msg(xM)
+    # print(message)
+    return message
+
+
+message = ElGamal_Alice_decrypt(xC1, yC1, xC2, yC2)
+print(message)
