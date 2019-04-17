@@ -96,6 +96,7 @@ def translator(cipher, keypad):
 xQab, yQab = fastAdding(b, xQa, yQa)
 # print(xQab, yQab)
 shared_key = Encryption1.int2bin(xQab)
+# print(shared_key)
 message = translator(ciphertext, shared_key)
 print(message)
 # print(str(shared_key^ciphertext))
